@@ -1,7 +1,7 @@
 import warnings
 
 from .datasets.builder import DATASETS
-from .datasets.datasets.top_down.topdown_base_dataset import TopDownBaseDataset
+from .datasets.datasets._base_ import Kpt2dSviewRgbImgTopDownDataset
 from .models.builder import HEADS, POSENETS
 from .models.detectors import AssociativeEmbedding
 from .models.heads import (AEHigherResolutionHead, AESimpleHead,
@@ -12,7 +12,7 @@ from .models.heads import (AEHigherResolutionHead, AESimpleHead,
 
 
 @DATASETS.register_module()
-class TopDownFreiHandDataset(TopDownBaseDataset):
+class TopDownFreiHandDataset(Kpt2dSviewRgbImgTopDownDataset):
     """Deprecated TopDownFreiHandDataset."""
 
     def __init__(self, *args, **kwargs):
@@ -29,7 +29,7 @@ class TopDownFreiHandDataset(TopDownBaseDataset):
 
 
 @DATASETS.register_module()
-class TopDownOneHand10KDataset(TopDownBaseDataset):
+class TopDownOneHand10KDataset(Kpt2dSviewRgbImgTopDownDataset):
     """Deprecated TopDownOneHand10KDataset."""
 
     def __init__(self, *args, **kwargs):
@@ -46,7 +46,7 @@ class TopDownOneHand10KDataset(TopDownBaseDataset):
 
 
 @DATASETS.register_module()
-class TopDownPanopticDataset(TopDownBaseDataset):
+class TopDownPanopticDataset(Kpt2dSviewRgbImgTopDownDataset):
     """Deprecated TopDownPanopticDataset."""
 
     def __init__(self, *args, **kwargs):

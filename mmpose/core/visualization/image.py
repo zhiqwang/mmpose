@@ -99,11 +99,11 @@ def imshow_keypoints(img,
                      skeleton=None,
                      kpt_score_thr=0.3,
                      pose_kpt_color=None,
-                     pose_limb_color=None,
+                     pose_link_color=None,
                      radius=4,
                      thickness=1,
                      show_keypoint_weight=False):
-    """Draw keypoints and limbs on an image.
+    """Draw keypoints and links on an image.
 
     Args:
             img (str or Tensor): The image to draw poses on. If an image array
@@ -115,8 +115,8 @@ def imshow_keypoints(img,
                 to be shown. Default: 0.3.
             pose_kpt_color (np.array[Nx3]`): Color of N keypoints. If None,
                 the keypoint will not be drawn.
-            pose_limb_color (np.array[Mx3]): Color of M limbs. If None, the
-                limbs will not be drawn.
+            pose_link_color (np.array[Mx3]): Color of M links. If None, the
+                links will not be drawn.
             thickness (int): Thickness of lines.
     """
 
@@ -148,18 +148,18 @@ def imshow_keypoints(img,
                         cv2.circle(img, (int(x_coord), int(y_coord)), radius,
                                    (int(r), int(g), int(b)), -1)
 
-        # draw limbs
-        if skeleton is not None and pose_limb_color is not None:
-            assert len(pose_limb_color) == len(skeleton)
+        # draw links
+        if skeleton is not None and pose_link_color is not None:
+            assert len(pose_link_color) == len(skeleton)
             for sk_id, sk in enumerate(skeleton):
-                pos1 = (int(kpts[sk[0] - 1, 0]), int(kpts[sk[0] - 1, 1]))
-                pos2 = (int(kpts[sk[1] - 1, 0]), int(kpts[sk[1] - 1, 1]))
+                pos1 = (int(kpts[sk[0], 0]), int(kpts[sk[0], 1]))
+                pos2 = (int(kpts[sk[1], 0]), int(kpts[sk[1], 1]))
                 if (pos1[0] > 0 and pos1[0] < img_w and pos1[1] > 0
                         and pos1[1] < img_h and pos2[0] > 0 and pos2[0] < img_w
                         and pos2[1] > 0 and pos2[1] < img_h
-                        and kpts[sk[0] - 1, 2] > kpt_score_thr
-                        and kpts[sk[1] - 1, 2] > kpt_score_thr):
-                    r, g, b = pose_limb_color[sk_id]
+                        and kpts[sk[0], 2] > kpt_score_thr
+                        and kpts[sk[1], 2] > kpt_score_thr):
+                    r, g, b = pose_link_color[sk_id]
                     if show_keypoint_weight:
                         img_copy = img.copy()
                         X = (pos1[0], pos2[0])
@@ -177,10 +177,7 @@ def imshow_keypoints(img,
                         cv2.fillConvexPoly(img_copy, polygon,
                                            (int(r), int(g), int(b)))
                         transparency = max(
-                            0,
-                            min(
-                                1, 0.5 *
-                                (kpts[sk[0] - 1, 2] + kpts[sk[1] - 1, 2])))
+                            0, min(1, 0.5 * (kpts[sk[0], 2] + kpts[sk[1], 2])))
                         cv2.addWeighted(
                             img_copy,
                             transparency,
@@ -203,7 +200,7 @@ def imshow_keypoints_3d(
     img=None,
     skeleton=None,
     pose_kpt_color=None,
-    pose_limb_color=None,
+    pose_link_color=None,
     vis_height=400,
     kpt_score_thr=0.3,
     num_instances=-1,
@@ -213,7 +210,7 @@ def imshow_keypoints_3d(
     axis_dist=10.0,
     axis_elev=15.0,
 ):
-    """Draw 3D keypoints and limbs in 3D coordinates.
+    """Draw 3D keypoints and links in 3D coordinates.
 
     Args:
         pose_result (list[dict]): 3D pose results containing:
@@ -224,11 +221,11 @@ def imshow_keypoints_3d(
             image and/or 2D pose. Note that the image should be given in BGR
             channel order.
         skeleton (list of [idx_i,idx_j]): Skeleton described by a list of
-            limbs, each is a pair of joint indices.
+            links, each is a pair of joint indices.
         pose_kpt_color (np.ndarray[Nx3]`): Color of N keypoints. If None, do
             not nddraw keypoints.
-        pose_limb_color (np.array[Mx3]): Color of M limbs. If None, do not
-            draw limbs.
+        pose_link_color (np.array[Mx3]): Color of M links. If None, do not
+            draw links.
         vis_height (int): The image hight of the visualization. The width
                 will be N*vis_height depending on the number of visualized
                 items.
@@ -316,18 +313,18 @@ def imshow_keypoints_3d(
                 color=_color[valid],
             )
 
-        if not dummy and skeleton is not None and pose_limb_color is not None:
-            pose_limb_color = np.array(pose_limb_color)
-            assert len(pose_limb_color) == len(skeleton)
-            for limb, limb_color in zip(skeleton, pose_limb_color):
-                limb_indices = [_i - 1 for _i in limb]
-                xs_3d = kpts[limb_indices, 0]
-                ys_3d = kpts[limb_indices, 1]
-                zs_3d = kpts[limb_indices, 2]
-                kpt_score = kpts[limb_indices, 3]
+        if not dummy and skeleton is not None and pose_link_color is not None:
+            pose_link_color = np.array(pose_link_color)
+            assert len(pose_link_color) == len(skeleton)
+            for link, link_color in zip(skeleton, pose_link_color):
+                link_indices = [_i for _i in link]
+                xs_3d = kpts[link_indices, 0]
+                ys_3d = kpts[link_indices, 1]
+                zs_3d = kpts[link_indices, 2]
+                kpt_score = kpts[link_indices, 3]
                 if kpt_score.min() > kpt_score_thr:
                     # matplotlib uses RGB color in [0, 1] value range
-                    _color = limb_color[::-1] / 255.
+                    _color = link_color[::-1] / 255.
                     ax.plot(xs_3d, ys_3d, zs_3d, color=_color, zdir='z')
 
         if 'title' in res:
@@ -344,91 +341,3 @@ def imshow_keypoints_3d(
     plt.close(fig)
 
     return img_vis
-
-
-def imshow_mesh_3d(img,
-                   vertices,
-                   faces,
-                   camera_center,
-                   focal_length,
-                   colors=(76, 76, 204)):
-    """Render 3D meshes on background image.
-
-    Args:
-        img(np.ndarray): Background image.
-        vertices (list of np.ndarray): Vetrex coordinates in camera space.
-        faces (list of np.ndarray): Faces of meshes.
-        camera_center ([2]): Center pixel.
-        focal_length ([2]): Focal length of camera.
-        colors (list[str or tuple or Color]): A list of mesh colors.
-    """
-
-    H, W, C = img.shape
-
-    if not has_pyrender:
-        warnings.warn('pyrender package is not installed.')
-        return img
-
-    try:
-        renderer = pyrender.OffscreenRenderer(
-            viewport_width=W, viewport_height=H)
-    except RuntimeError:
-        warnings.warn('pyrender package is not installed correctly.')
-        return img
-
-    if not isinstance(colors, list):
-        colors = [colors for _ in range(len(vertices))]
-    colors = [color_val(c) for c in colors]
-
-    depth_map = np.ones([H, W]) * np.inf
-    output_img = img
-    for idx in range(len(vertices)):
-        color = colors[idx]
-        color = [c / 255.0 for c in color]
-        color.append(1.0)
-        vert = vertices[idx]
-        face = faces[idx]
-
-        material = pyrender.MetallicRoughnessMaterial(
-            metallicFactor=0.2, alphaMode='OPAQUE', baseColorFactor=color)
-
-        mesh = trimesh.Trimesh(vert, face)
-        rot = trimesh.transformations.rotation_matrix(
-            np.radians(180), [1, 0, 0])
-        mesh.apply_transform(rot)
-        mesh = pyrender.Mesh.from_trimesh(mesh, material=material)
-
-        scene = pyrender.Scene(ambient_light=(0.5, 0.5, 0.5))
-        scene.add(mesh, 'mesh')
-
-        camera_pose = np.eye(4)
-        camera = pyrender.IntrinsicsCamera(
-            fx=focal_length[0],
-            fy=focal_length[1],
-            cx=camera_center[0],
-            cy=camera_center[1],
-            zfar=1e5)
-        scene.add(camera, pose=camera_pose)
-
-        light = pyrender.DirectionalLight(color=[1.0, 1.0, 1.0], intensity=1)
-        light_pose = np.eye(4)
-
-        light_pose[:3, 3] = np.array([0, -1, 1])
-        scene.add(light, pose=light_pose)
-
-        light_pose[:3, 3] = np.array([0, 1, 1])
-        scene.add(light, pose=light_pose)
-
-        light_pose[:3, 3] = np.array([1, 1, 2])
-        scene.add(light, pose=light_pose)
-
-        color, rend_depth = renderer.render(
-            scene, flags=pyrender.RenderFlags.RGBA)
-
-        valid_mask = (rend_depth < depth_map) * (rend_depth > 0)
-        depth_map[valid_mask] = rend_depth[valid_mask]
-        valid_mask = valid_mask[:, :, None]
-        output_img = (
-            valid_mask * color[:, :, :3] + (1 - valid_mask) * output_img)
-
-    return output_img
