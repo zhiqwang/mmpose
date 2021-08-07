@@ -1,42 +1,37 @@
 import torch.nn as nn
-from mmcv.cnn import (build_conv_layer, build_norm_layer, build_upsample_layer,
-                      constant_init, normal_init)
+from mmcv.cnn import (build_conv_layer, build_upsample_layer, constant_init,
+                      normal_init)
 
 from mmpose.models.builder import build_loss
 from ..builder import HEADS
 
 
 @HEADS.register_module()
-class AESimpleHead(nn.Module):
-    """Associative embedding simple head.
+class AEMultiStageHead(nn.Module):
+    """Associative embedding multi-stage head.
     paper ref: Alejandro Newell et al. "Associative
     Embedding: End-to-end Learning for Joint Detection
     and Grouping"
 
     Args:
         in_channels (int): Number of input channels.
-        num_joints (int): Number of joints.
+        out_channels (int): Number of output channels.
         num_deconv_layers (int): Number of deconv layers.
             num_deconv_layers should >= 0. Note that 0 means
             no deconv layers.
         num_deconv_filters (list|tuple): Number of filters.
             If num_deconv_layers > 0, the length of
         num_deconv_kernels (list|tuple): Kernel sizes.
-        tag_per_joint (bool): If tag_per_joint is True,
-            the dimension of tags equals to num_joints,
-            else the dimension of tags is 1. Default: True
-        with_ae_loss (list[bool]): Option to use ae loss or not.
         loss_keypoint (dict): Config for loss. Default: None.
     """
 
     def __init__(self,
                  in_channels,
-                 num_joints,
+                 out_channels,
+                 num_stages=1,
                  num_deconv_layers=3,
                  num_deconv_filters=(256, 256, 256),
                  num_deconv_kernels=(4, 4, 4),
-                 tag_per_joint=True,
-                 with_ae_loss=None,
                  extra=None,
                  loss_keypoint=None):
         super().__init__()
@@ -44,26 +39,26 @@ class AESimpleHead(nn.Module):
         self.loss = build_loss(loss_keypoint)
 
         self.in_channels = in_channels
-        dim_tag = num_joints if tag_per_joint else 1
-        if with_ae_loss[0]:
-            out_channels = num_joints + dim_tag
-        else:
-            out_channels = num_joints
+        self.num_stages = num_stages
 
         if extra is not None and not isinstance(extra, dict):
             raise TypeError('extra should be dict or None.')
 
-        if num_deconv_layers > 0:
-            self.deconv_layers = self._make_deconv_layer(
-                num_deconv_layers,
-                num_deconv_filters,
-                num_deconv_kernels,
-            )
-        elif num_deconv_layers == 0:
-            self.deconv_layers = nn.Identity()
-        else:
-            raise ValueError(
-                f'num_deconv_layers ({num_deconv_layers}) should >= 0.')
+        # build multi-stage deconv layers
+        self.multi_deconv_layers = nn.ModuleList([])
+        for _ in range(self.num_stages):
+            if num_deconv_layers > 0:
+                deconv_layers = self._make_deconv_layer(
+                    num_deconv_layers,
+                    num_deconv_filters,
+                    num_deconv_kernels,
+                )
+            elif num_deconv_layers == 0:
+                deconv_layers = nn.Identity()
+            else:
+                raise ValueError(
+                    f'num_deconv_layers ({num_deconv_layers}) should >= 0.')
+            self.multi_deconv_layers.append(deconv_layers)
 
         identity_final_layer = False
         if extra is not None and 'final_conv_kernel' in extra:
@@ -80,44 +75,21 @@ class AESimpleHead(nn.Module):
             kernel_size = 1
             padding = 0
 
-        if identity_final_layer:
-            self.final_layer = nn.Identity()
-        else:
-            conv_channels = num_deconv_filters[
-                -1] if num_deconv_layers > 0 else self.in_channels
-
-            layers = []
-            if extra is not None:
-                num_conv_layers = extra.get('num_conv_layers', 0)
-                num_conv_kernels = extra.get('num_conv_kernels',
-                                             [1] * num_conv_layers)
-
-                for i in range(num_conv_layers):
-                    layers.append(
-                        build_conv_layer(
-                            dict(type='Conv2d'),
-                            in_channels=conv_channels,
-                            out_channels=conv_channels,
-                            kernel_size=num_conv_kernels[i],
-                            stride=1,
-                            padding=(num_conv_kernels[i] - 1) // 2))
-                    layers.append(
-                        build_norm_layer(dict(type='BN'), conv_channels)[1])
-                    layers.append(nn.ReLU(inplace=True))
-
-            layers.append(
-                build_conv_layer(
+        # build multi-stage final layers
+        self.multi_final_layers = nn.ModuleList([])
+        for i in range(self.num_stages):
+            if identity_final_layer:
+                final_layer = nn.Identity()
+            else:
+                final_layer = build_conv_layer(
                     cfg=dict(type='Conv2d'),
-                    in_channels=conv_channels,
+                    in_channels=num_deconv_filters[-1]
+                    if num_deconv_layers > 0 else in_channels,
                     out_channels=out_channels,
                     kernel_size=kernel_size,
                     stride=1,
-                    padding=padding))
-
-            if len(layers) > 1:
-                self.final_layer = nn.Sequential(*layers)
-            else:
-                self.final_layer = layers[0]
+                    padding=padding)
+            self.multi_final_layers.append(final_layer)
 
     def get_loss(self, output, targets, masks, joints):
         """Calculate bottom-up keypoint loss.
@@ -166,14 +138,18 @@ class AESimpleHead(nn.Module):
         return losses
 
     def forward(self, x):
-        """Forward function."""
-        if isinstance(x, list):
-            x = x[0]
-        final_outputs = []
-        x = self.deconv_layers(x)
-        y = self.final_layer(x)
-        final_outputs.append(y)
-        return final_outputs
+        """Forward function.
+
+        Returns:
+            out (list[Tensor]): a list of heatmaps from multiple stages.
+        """
+        out = []
+        assert isinstance(x, list)
+        for i in range(self.num_stages):
+            y = self.multi_deconv_layers[i](x[i])
+            y = self.multi_final_layers[i](y)
+            out.append(y)
+        return out
 
     def _make_deconv_layer(self, num_layers, num_filters, num_kernels):
         """Make deconv layers."""
@@ -227,11 +203,11 @@ class AESimpleHead(nn.Module):
 
     def init_weights(self):
         """Initialize model weights."""
-        for _, m in self.deconv_layers.named_modules():
+        for _, m in self.multi_deconv_layers.named_modules():
             if isinstance(m, nn.ConvTranspose2d):
                 normal_init(m, std=0.001)
             elif isinstance(m, nn.BatchNorm2d):
                 constant_init(m, 1)
-        for m in self.final_layer.modules():
+        for m in self.multi_final_layers.modules():
             if isinstance(m, nn.Conv2d):
                 normal_init(m, std=0.001, bias=0)
