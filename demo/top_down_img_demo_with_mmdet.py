@@ -1,4 +1,5 @@
 import os
+import warnings
 from argparse import ArgumentParser
 
 from mmpose.apis import (inference_top_down_pose_model, init_pose_model,
