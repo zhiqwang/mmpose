@@ -1,5 +1,4 @@
 from abc import ABCMeta, abstractmethod
-
 from mmcv.utils import Registry
 
 CAMERAS = Registry('camera')

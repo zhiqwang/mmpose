@@ -4,14 +4,13 @@
 # -----------------------------------------------------------------------------
 
 import argparse
+import cv2
+import numpy as np
 import os
 import pickle
 import tarfile
 import xml.etree.ElementTree as ET
 from os.path import join
-
-import cv2
-import numpy as np
 from spacepy import pycdf
 
 

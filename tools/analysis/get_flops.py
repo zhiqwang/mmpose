@@ -1,5 +1,4 @@
 import argparse
-
 from mmcv import Config
 
 from mmpose.models import build_posenet

@@ -1,11 +1,10 @@
 import argparse
+import cv2
+import numpy as np
 import time
 from collections import deque
 from queue import Queue
 from threading import Event, Lock, Thread
-
-import cv2
-import numpy as np
 
 from mmpose.apis import (get_track_id, inference_top_down_pose_model,
                          init_pose_model, vis_pose_result)

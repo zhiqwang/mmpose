@@ -1,8 +1,7 @@
 import copy
-import tempfile
-
 import numpy as np
 import pytest
+import tempfile
 from numpy.testing import assert_almost_equal
 
 from mmpose.datasets import DATASETS

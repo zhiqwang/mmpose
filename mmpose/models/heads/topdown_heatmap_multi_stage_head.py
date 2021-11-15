@@ -1,5 +1,4 @@
 import copy as cp
-
 import torch.nn as nn
 from mmcv.cnn import (ConvModule, DepthwiseSeparableConvModule, Linear,
                       build_activation_layer, build_conv_layer,

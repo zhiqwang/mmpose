@@ -1,8 +1,7 @@
-import os
-from collections import OrderedDict
-
 import json_tricks as json
 import numpy as np
+import os
+from collections import OrderedDict
 
 from mmpose.datasets.builder import DATASETS
 from .hand_base_dataset import HandBaseDataset

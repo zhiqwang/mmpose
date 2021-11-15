@@ -1,7 +1,6 @@
-import unittest.mock as mock
-
 import pytest
 import torch
+import unittest.mock as mock
 from torch.utils.data import DataLoader, Dataset
 
 from mmpose.core import DistEvalHook, EvalHook

@@ -1,7 +1,6 @@
 import copy
-import os.path as osp
-
 import numpy as np
+import os.path as osp
 import pytest
 import xtcocotools
 from xtcocotools.coco import COCO

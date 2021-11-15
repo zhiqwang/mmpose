@@ -1,7 +1,6 @@
+import cv2
 import os
 from argparse import ArgumentParser
-
-import cv2
 
 from mmpose.apis import (get_track_id, inference_top_down_pose_model,
                          init_pose_model, process_mmdet_results,

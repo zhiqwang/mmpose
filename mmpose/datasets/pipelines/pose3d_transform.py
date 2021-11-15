@@ -1,5 +1,4 @@
 import copy
-
 import mmcv
 import numpy as np
 import torch

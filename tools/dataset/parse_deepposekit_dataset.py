@@ -1,10 +1,9 @@
-import json
-import os
-import time
-
 import cv2
 import h5py
+import json
 import numpy as np
+import os
+import time
 
 np.random.seed(0)
 

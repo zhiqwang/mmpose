@@ -1,9 +1,8 @@
+import mmcv
+import numpy as np
 import os
 import os.path as osp
 from argparse import ArgumentParser
-
-import mmcv
-import numpy as np
 from xtcocotools.coco import COCO
 
 from mmpose.apis import inference_interhand_3d_model, vis_3d_pose_result

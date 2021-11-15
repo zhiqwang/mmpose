@@ -1,9 +1,8 @@
 import argparse
-import os.path as osp
-from functools import wraps
-
 import mmcv
 import numpy as np
+import os.path as osp
+from functools import wraps
 from PIL import Image
 
 from mmpose.core import SimpleCamera

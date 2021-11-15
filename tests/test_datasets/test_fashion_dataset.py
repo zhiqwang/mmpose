@@ -1,9 +1,8 @@
-import tempfile
-from unittest.mock import MagicMock
-
 import numpy as np
 import pytest
+import tempfile
 from numpy.testing import assert_almost_equal
+from unittest.mock import MagicMock
 
 from mmpose.datasets import DATASETS
 

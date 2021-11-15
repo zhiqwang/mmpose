@@ -1,8 +1,7 @@
 import copy as cp
+import numpy as np
 import os
 from abc import ABCMeta
-
-import numpy as np
 from torch.utils.data import Dataset
 
 from mmpose.datasets.pipelines import Compose

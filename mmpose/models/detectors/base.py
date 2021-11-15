@@ -1,9 +1,8 @@
-from abc import ABCMeta, abstractmethod
-from collections import OrderedDict
-
 import torch
 import torch.distributed as dist
 import torch.nn as nn
+from abc import ABCMeta, abstractmethod
+from collections import OrderedDict
 
 
 class BasePose(nn.Module, metaclass=ABCMeta):

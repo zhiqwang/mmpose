@@ -3,10 +3,9 @@
 # Original licence: Copyright (c) 2018 akanazawa, under the MIT License.
 # ------------------------------------------------------------------------------
 
-from abc import abstractmethod
-
 import torch
 import torch.nn as nn
+from abc import abstractmethod
 from mmcv.cnn import normal_init, xavier_init
 
 from mmpose.models.utils.geometry import batch_rodrigues

@@ -1,15 +1,14 @@
 import os.path as osp
-import tempfile
-import unittest.mock as mock
-from collections import OrderedDict
-from unittest.mock import MagicMock, patch
-
 import pytest
+import tempfile
 import torch
 import torch.nn as nn
+import unittest.mock as mock
+from collections import OrderedDict
 from mmcv.runner import EpochBasedRunner, build_optimizer
 from mmcv.utils import get_logger
 from torch.utils.data import DataLoader, Dataset
+from unittest.mock import MagicMock, patch
 
 from mmpose.core import DistEvalHook, EvalHook
 

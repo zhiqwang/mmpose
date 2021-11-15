@@ -1,7 +1,6 @@
-import warnings
-
 import cv2
 import numpy as np
+import warnings
 
 from mmpose.core.post_processing import transform_preds
 

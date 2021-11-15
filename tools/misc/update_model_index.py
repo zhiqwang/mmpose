@@ -6,11 +6,10 @@
 # detected before a commit.
 
 import glob
+import mmcv
 import os.path as osp
 import re
 import sys
-
-import mmcv
 
 MMPOSE_ROOT = osp.dirname(osp.dirname(osp.dirname(__file__)))
 

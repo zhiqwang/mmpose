@@ -1,11 +1,10 @@
 #!/usr/bin/env python
 import functools as func
 import glob
-import re
-from os.path import basename, splitext
-
 import numpy as np
+import re
 import titlecase
+from os.path import basename, splitext
 
 
 def anchor(name):

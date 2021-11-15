@@ -1,7 +1,6 @@
+import numpy as np
 import os
 import warnings
-
-import numpy as np
 from xtcocotools.coco import COCO
 from xtcocotools.cocoeval import COCOeval
 

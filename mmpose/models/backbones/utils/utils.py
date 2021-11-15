@@ -1,5 +1,4 @@
 from collections import OrderedDict
-
 from mmcv.runner.checkpoint import _load_checkpoint, load_state_dict
 
 

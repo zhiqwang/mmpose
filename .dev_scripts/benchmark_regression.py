@@ -1,12 +1,11 @@
 import argparse
 import math
+import mmcv
 import os
 import os.path as osp
 import random
 import socket
 from datetime import datetime
-
-import mmcv
 
 
 def is_port_available(port, host='127.0.0.1'):

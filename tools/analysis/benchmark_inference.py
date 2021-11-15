@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 import argparse
 import time
-
 import torch
 from mmcv import Config
 from mmcv.cnn import fuse_conv_bn

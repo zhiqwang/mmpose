@@ -1,7 +1,6 @@
 import copy
-import os.path as osp
-
 import numpy as np
+import os.path as osp
 import torch
 from numpy.testing import assert_array_almost_equal
 from xtcocotools.coco import COCO

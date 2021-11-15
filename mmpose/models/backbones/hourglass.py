@@ -1,5 +1,4 @@
 import copy
-
 import torch.nn as nn
 from mmcv.cnn import ConvModule, constant_init, normal_init
 from torch.nn.modules.batchnorm import _BatchNorm

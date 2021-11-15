@@ -1,8 +1,7 @@
-import os.path as osp
-from collections import OrderedDict, defaultdict
-
 import mmcv
 import numpy as np
+import os.path as osp
+from collections import OrderedDict, defaultdict
 
 from mmpose.core.evaluation import (keypoint_3d_auc, keypoint_3d_pck,
                                     keypoint_mpjpe)

@@ -2,7 +2,6 @@
 import os
 import re
 from glob import glob
-
 from titlecase import titlecase
 
 os.makedirs('topics', exist_ok=True)

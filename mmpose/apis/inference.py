@@ -1,8 +1,7 @@
-import os
-
 import cv2
 import mmcv
 import numpy as np
+import os
 import torch
 from mmcv.parallel import collate, scatter
 from mmcv.runner import load_checkpoint

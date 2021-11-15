@@ -1,7 +1,6 @@
-import warnings
-
 import mmcv
 import torch
+import warnings
 from mmcv.image import imwrite
 from mmcv.visualization.image import imshow
 

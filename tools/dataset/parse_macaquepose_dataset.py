@@ -1,10 +1,9 @@
 import csv
+import cv2
 import json
+import numpy as np
 import os
 import time
-
-import cv2
-import numpy as np
 
 np.random.seed(0)
 

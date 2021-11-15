@@ -1,11 +1,10 @@
-import math
-import os
-import warnings
-
 import cv2
+import math
 import mmcv
 import numpy as np
+import os
 import trimesh
+import warnings
 from matplotlib import pyplot as plt
 from mmcv.visualization.color import color_val
 

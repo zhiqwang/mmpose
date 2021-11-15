@@ -1,6 +1,5 @@
-import warnings
-
 import numpy as np
+import warnings
 
 from mmpose.core import OneEuroFilter, oks_iou
 

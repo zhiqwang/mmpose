@@ -1,13 +1,12 @@
 import argparse
-import os
-import pickle
-import shutil
-from os.path import join
-
 import cv2
 import h5py
 import mmcv
 import numpy as np
+import os
+import pickle
+import shutil
+from os.path import join
 from scipy.io import loadmat
 
 train_subjects = [i for i in range(1, 9)]

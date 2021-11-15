@@ -1,10 +1,9 @@
 import copy
-import os.path as osp
-import tempfile
-
 import mmcv
 import numpy as np
+import os.path as osp
 import pytest
+import tempfile
 from numpy.testing import assert_array_almost_equal
 
 from mmpose.core import SimpleCamera
