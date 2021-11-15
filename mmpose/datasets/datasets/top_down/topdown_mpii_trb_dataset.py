@@ -1,10 +1,9 @@
 import copy as cp
+import json_tricks as json
+import numpy as np
 import os
 import os.path as osp
 from collections import OrderedDict
-
-import json_tricks as json
-import numpy as np
 
 from mmpose.datasets.builder import DATASETS
 from .topdown_base_dataset import TopDownBaseDataset

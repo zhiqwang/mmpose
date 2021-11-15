@@ -1,5 +1,4 @@
 import copy
-
 import torch.nn as nn
 from mmcv.cnn import ConvModule, build_conv_layer, constant_init, kaiming_init
 from mmcv.utils.parrots_wrapper import _BatchNorm

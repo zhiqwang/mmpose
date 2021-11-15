@@ -1,11 +1,10 @@
+import cv2
 import json
+import numpy as np
 import os
 import re
 import time
 import warnings
-
-import cv2
-import numpy as np
 import xmltodict
 from xtcocotools.coco import COCO
 

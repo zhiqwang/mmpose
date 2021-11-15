@@ -1,7 +1,6 @@
-from abc import ABCMeta, abstractmethod
-
 import numpy as np
 import torch.nn as nn
+from abc import ABCMeta, abstractmethod
 
 from mmpose.core.evaluation.top_down_eval import keypoints_from_heatmaps
 

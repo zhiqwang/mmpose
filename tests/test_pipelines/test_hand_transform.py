@@ -1,5 +1,4 @@
 import copy
-
 import numpy as np
 
 from mmpose.datasets.pipelines import Compose

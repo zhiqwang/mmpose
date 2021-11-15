@@ -1,8 +1,7 @@
 import json
+import numpy as np
 import os
 from collections import OrderedDict
-
-import numpy as np
 from scipy.io import loadmat, savemat
 
 from ...builder import DATASETS

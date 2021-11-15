@@ -1,6 +1,5 @@
 import tempfile
 import warnings
-
 from mmcv.runner import DistEvalHook as _DistEvalHook
 from mmcv.runner import EvalHook as _EvalHook
 

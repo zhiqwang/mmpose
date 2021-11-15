@@ -1,5 +1,4 @@
 import copy
-
 import torch.nn as nn
 from mmcv.cnn import (build_conv_layer, build_norm_layer, constant_init,
                       normal_init)

@@ -1,11 +1,10 @@
 import copy
-import os
-import os.path as osp
-from argparse import ArgumentParser
-
 import cv2
 import mmcv
 import numpy as np
+import os
+import os.path as osp
+from argparse import ArgumentParser
 
 from mmpose.apis import (extract_pose_sequence, get_track_id,
                          inference_pose_lifter_model,

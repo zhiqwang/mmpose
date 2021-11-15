@@ -1,8 +1,7 @@
-import os
-from collections import OrderedDict
-
 import json_tricks as json
 import numpy as np
+import os
+from collections import OrderedDict
 
 from mmpose.core.evaluation.top_down_eval import (keypoint_auc, keypoint_epe,
                                                   keypoint_pck_accuracy)

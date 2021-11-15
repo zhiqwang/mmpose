@@ -1,6 +1,5 @@
-from abc import ABCMeta
-
 import numpy as np
+from abc import ABCMeta
 from torch.utils.data import ConcatDataset, Dataset, WeightedRandomSampler
 
 from mmpose.datasets.builder import DATASETS

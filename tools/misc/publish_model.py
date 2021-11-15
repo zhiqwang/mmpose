@@ -1,8 +1,7 @@
 import argparse
 import subprocess
-from datetime import date
-
 import torch
+from datetime import date
 
 
 def parse_args():

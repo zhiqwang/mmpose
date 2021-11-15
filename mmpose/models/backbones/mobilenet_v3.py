@@ -1,6 +1,5 @@
 import copy
 import logging
-
 import torch.nn as nn
 from mmcv.cnn import ConvModule, constant_init, kaiming_init
 from torch.nn.modules.batchnorm import _BatchNorm

@@ -1,8 +1,7 @@
 import copy
-from abc import ABCMeta, abstractmethod
-
 import json_tricks as json
 import numpy as np
+from abc import ABCMeta, abstractmethod
 from torch.utils.data import Dataset
 from xtcocotools.coco import COCO
 

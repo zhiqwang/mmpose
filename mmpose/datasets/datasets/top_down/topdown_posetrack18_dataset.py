@@ -1,10 +1,9 @@
+import json_tricks as json
+import numpy as np
 import os
 import os.path as osp
 import warnings
 from collections import OrderedDict, defaultdict
-
-import json_tricks as json
-import numpy as np
 from poseval import eval_helpers
 from poseval.evaluateAP import evaluateAP
 from xtcocotools.coco import COCO

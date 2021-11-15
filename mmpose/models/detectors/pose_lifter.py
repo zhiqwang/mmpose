@@ -1,7 +1,6 @@
-import warnings
-
 import mmcv
 import numpy as np
+import warnings
 
 from mmpose.core import imshow_bboxes, imshow_keypoints, imshow_keypoints_3d
 from .. import builder

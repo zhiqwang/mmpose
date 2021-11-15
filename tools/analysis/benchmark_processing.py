@@ -13,7 +13,6 @@ To visualize cProfile output program.prof, use Snakeviz and run:
 $ snakeviz program.prof
 """
 import argparse
-
 import mmcv
 from mmcv import Config
 

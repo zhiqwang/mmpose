@@ -1,6 +1,5 @@
-import tempfile
-
 import numpy as np
+import tempfile
 
 from mmpose.datasets import DATASETS
 from mmpose.datasets.builder import build_dataset

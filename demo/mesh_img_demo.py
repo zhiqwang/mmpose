@@ -1,6 +1,5 @@
 import os
 from argparse import ArgumentParser
-
 from xtcocotools.coco import COCO
 
 from mmpose.apis import (inference_mesh_model, init_pose_model,

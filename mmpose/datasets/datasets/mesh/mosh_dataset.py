@@ -1,7 +1,6 @@
 import copy as cp
-from abc import ABCMeta
-
 import numpy as np
+from abc import ABCMeta
 from torch.utils.data import Dataset
 
 from mmpose.datasets.builder import DATASETS

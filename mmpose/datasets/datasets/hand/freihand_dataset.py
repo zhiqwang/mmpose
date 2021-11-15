@@ -1,7 +1,6 @@
+import numpy as np
 import os
 from collections import OrderedDict
-
-import numpy as np
 
 from mmpose.datasets.builder import DATASETS
 from .hand_base_dataset import HandBaseDataset

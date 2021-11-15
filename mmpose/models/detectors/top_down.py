@@ -1,7 +1,6 @@
-import warnings
-
 import mmcv
 import numpy as np
+import warnings
 from mmcv.image import imwrite
 from mmcv.visualization.image import imshow
 

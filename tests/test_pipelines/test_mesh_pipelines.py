@@ -1,7 +1,6 @@
 import copy
-import os
-
 import numpy as np
+import os
 import torch
 from numpy.testing import assert_array_almost_equal
 

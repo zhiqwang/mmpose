@@ -1,7 +1,6 @@
+import cv2
 import os
 from argparse import ArgumentParser
-
-import cv2
 
 from mmpose.apis import (inference_bottom_up_pose_model, init_pose_model,
                          vis_pose_result)

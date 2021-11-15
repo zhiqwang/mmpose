@@ -1,9 +1,8 @@
-import os
-from collections import OrderedDict, defaultdict
-
 import json_tricks as json
 import numpy as np
+import os
 import xtcocotools
+from collections import OrderedDict, defaultdict
 from xtcocotools.coco import COCO
 from xtcocotools.cocoeval import COCOeval
 

@@ -1,6 +1,5 @@
-from abc import ABCMeta, abstractmethod, abstractproperty
-
 import torch
+from abc import ABCMeta, abstractmethod, abstractproperty
 
 
 class PytorchModuleHook(metaclass=ABCMeta):

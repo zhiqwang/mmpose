@@ -3,9 +3,8 @@
 # Original licence: Copyright (c) Microsoft, under the MIT License.
 # ------------------------------------------------------------------------------
 
-import math
-
 import cv2
+import math
 import numpy as np
 
 

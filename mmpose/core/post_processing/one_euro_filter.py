@@ -2,9 +2,8 @@
 # Adapted from https://github.com/HoBeom/OneEuroFilter-Numpy
 # Original licence: Copyright (c)  HoBeom Jeon, under the MIT License.
 # ------------------------------------------------------------------------------
-from time import time
-
 import numpy as np
+from time import time
 
 
 def smoothing_factor(t_e, cutoff):

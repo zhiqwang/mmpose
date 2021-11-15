@@ -1,10 +1,9 @@
-import json
-import os
-import time
-
 import cv2
 import h5py
+import json
 import numpy as np
+import os
+import time
 
 mat_files = ['COFW_train_color.mat', 'COFW_test_color.mat']
 dataset_dir = 'data/cofw/'

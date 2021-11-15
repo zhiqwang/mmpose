@@ -1,8 +1,7 @@
 import copy as cp
-from collections import OrderedDict
-
 import torch.nn as nn
 import torch.nn.functional as F
+from collections import OrderedDict
 from mmcv.cnn import (ConvModule, MaxPool2d, constant_init, kaiming_init,
                       normal_init)
 from mmcv.runner.checkpoint import load_state_dict

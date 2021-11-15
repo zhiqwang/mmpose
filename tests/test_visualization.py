@@ -1,7 +1,6 @@
-import tempfile
-
 import mmcv
 import numpy as np
+import tempfile
 
 from mmpose.core import (apply_bugeye_effect, apply_sunglasses_effect,
                          imshow_bboxes, imshow_keypoints, imshow_keypoints_3d)

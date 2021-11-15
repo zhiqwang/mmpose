@@ -1,6 +1,5 @@
-import warnings
-
 import numpy as np
+import warnings
 from xtcocotools.coco import COCO
 
 from ...builder import DATASETS

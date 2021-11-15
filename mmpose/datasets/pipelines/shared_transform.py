@@ -1,8 +1,7 @@
-import warnings
-from collections.abc import Sequence
-
 import mmcv
 import numpy as np
+import warnings
+from collections.abc import Sequence
 from mmcv.parallel import DataContainer as DC
 from mmcv.utils import build_from_cfg
 from numpy import random

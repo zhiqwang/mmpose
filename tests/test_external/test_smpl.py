@@ -1,11 +1,10 @@
+import numpy as np
 import os.path as osp
 import tempfile
-
-import numpy as np
 import torch
-from tests.utils.mesh_utils import generate_smpl_weight_file
 
 from mmpose.models.utils import SMPL
+from tests.utils.mesh_utils import generate_smpl_weight_file
 
 
 def test_smpl():
